@@ -24,9 +24,10 @@ var cat = { type:2 }
 // dog.getType.myCall(cat,1,2)
 
 //bind
-function bindFunc(b){
+function bindFunc(b,c){
 	console.log(this.a)
 	console.log(b)
+	console.log(c)
 }
 
 var bindObj = {
@@ -36,19 +37,29 @@ var bindObj = {
 Function.prototype.mybind = function(){
 	let orgFunc = this
 	let objCaller = arguments[0]
-	Array.prototype.shift.call(arguments)
-	return function(){
-		orgFunc.apply(objCaller,...arguments)
+	let argList = Array.prototype.slice.call(arguments,1)
+	var newFunc = function(){
+		orgFunc.apply(this instanceof newFunc ? this : objCaller,argList.concat(...arguments))
 	}
+
+	//通过new新的绑定函数生成对象要继承原型
+    var fNOP = function() {};
+    if (orgFunc.prototype) {
+      fNOP.prototype = orgFunc.prototype; 
+    }
+    newFunc.prototype = new fNOP();
+	return newFunc
 }
 
 
 // bindFunc()
 
-bindFunc.mybind(bindObj,1)()
+var generateBindFunc = bindFunc.mybind(bindObj,1)
+var newObj = new generateBindFunc(2)
 
 
-//new 1创建一个新的对象 2新对象指向构造函数的this 3执行函数 4返回函数原本返回对象或者新对象
+
+//new 1创建一个新的对象 2新对象指向构造函数的this(函数的执行者设置为新对象) 3执行函数 4返回函数原本返回对象或者新对象
 function myNew(){
 	var constructionFunc = Array.prototype.shift.call(arguments)
 	var obj = Object.create(constructionFunc.prototype)
