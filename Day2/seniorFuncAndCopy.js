@@ -8,6 +8,27 @@ var b = [1,2]
 a == b //false
 
 //copy
+var isObj = function(p){
+	return Object.prototype.toString.call(p) === '[object Object]'
+}
+
+function deepCopy(parm){
+	var copy = null
+	if(!parm.isObj()){
+		return parm
+	}
+	parm.isArray()?copy = []:copy = {}
+	//for in 循环 array(idx) object(key)
+	for(let item in )
+
+}
+
+//完善版deepcopy
+
+
+
+
+
 
 
 //seniorFunc
@@ -35,5 +56,4 @@ Array.prototype.myReduce = function(fn,initialAccumulator){
 [1,2,3].myReduce((a,b,c)=>{
 	
 })
-//urlBrowserProgress closureInterval React browserAnalysisProcess
 

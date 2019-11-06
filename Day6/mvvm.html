@@ -1,0 +1,17 @@
+<html>
+	<div id='app'>
+		<input mymvvm-model='value'> 
+		{{value}}
+	</div>
+</html>
+<script type="text/javascript" src="./mvvm.js">
+</script>
+<script type="text/javascript">
+	var myMvvmIns = new Mvvm({
+		el:'app',
+		data:{
+			value:2
+		}
+	})
+	myMvvmIns.main()
+</script>
