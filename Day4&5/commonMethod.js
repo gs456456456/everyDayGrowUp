@@ -60,12 +60,24 @@ var newObj = new generateBindFunc(2)
 
 
 //new 1创建一个新的对象 2新对象指向构造函数的this(函数的执行者设置为新对象) 3执行函数 4返回函数原本返回对象或者新对象
-function myNew(){
-	var constructionFunc = Array.prototype.shift.call(arguments)
-	var obj = Object.create(constructionFunc.prototype)
-	var res = constructionFunc.apply(obj,arguments)
-	return res instanceof Object?res:obj
+// function myNew(){
+// 	var constructionFunc = Array.prototype.shift.call(arguments)
+// 	var obj = Object.create(constructionFunc.prototype)
+// 	var res = constructionFunc.apply(obj,arguments)
+// 	return res instanceof Object?res:obj
+// }
+
+function myNew(func,...arg){
+	let obj = Object.create(null);
+	Object.setPrototypeOf(obj,func.prototype);
+	func.apply(this,arg);
+	return obj 
 }
+
+var cons = function(a){ this.a = a;this.test=()=>{console.log(1)}}
+
+myNew(cons,1)
+
 
 function test(a){
 	this.a = a
