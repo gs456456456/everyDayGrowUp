@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id='app'>
+		<test>
+			<template #first="{ user,count }">
+			</template>
+			<template #second>
+				second slot
+			</template>
+		</test>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+<script type="text/javascript">
+	//vue slot 以及 component
+
+	//父子组件传值
+	// 事件 emit
+	// refs
+	// eventBus
+	// slot
+	var test = Vue.component('test',{
+		data:function(){
+			return {
+				count:1,
+				user:'Danny'
+			}
+		},
+		template:`<div>
+					<div>I am {{ count }}</div>
+					<div>
+						<slot name="first" @user='user' @count='count'>first {{user}} {{count}}
+						</slot>
+					</div>
+					<div>
+						<slot name="second">second</slot>
+					</div>
+				</div>`
+	})
+	var vueIns = new Vue({
+		el:'#app',
+		// data:{
+		// 	user:'Danny'
+		// },
+		components:{
+			test:test
+		}
+	})
+</script>
